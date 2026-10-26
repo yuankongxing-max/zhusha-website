@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>朱砂集 · 东方雅致饰品</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-content">
+      <h1>朱砂集</h1>
+      <p class="slogan">东方之美，佩于日常</p>
+      <p class="sub">以东方审美，寻找适合自己的那一件。</p>
+      <div class="hero-btns">
+        <a href="#products" class="btn-primary">选购系列</a>
+        <a href="#custom" class="btn-outline">预约定制</a>
+      </div>
+    </div>
+  </header>
+
+  <nav class="categories">
+    <a href="#" data-cat="全部" class="active">全部</a>
+    <a href="#" data-cat="手串">手串</a>
+    <a href="#" data-cat="吊坠">吊坠</a>
+    <a href="#" data-cat="耳饰">耳饰</a>
+  </nav>
+
+  <section id="products" class="container">
+    <h2>为你精选</h2>
+    <div id="product-grid" class="product-grid"></div>
+  </section>
+
+  <section id="custom" class="custom-section">
+    <h2>私人定制</h2>
+    <p>普通商品不满足需求？提交您的偏好与预算，顾问一对一沟通。</p>
+    <form id="custom-form">
+      <input type="text" placeholder="礼赠场景（生日/纪念日等）" required>
+      <input type="text" placeholder="预算范围" required>
+      <textarea placeholder="款式偏好与需求描述"></textarea>
+      <input type="text" placeholder="联系方式（微信/手机）" required>
+      <button type="submit" class="btn-primary">提交需求</button>
+    </form>
+  </section>
+
+  <footer>
+    <p>朱砂集 · 东方雅致 · 材质信息以实际检测报告为准 · 不宣传未经证实的功效</p>
+  </footer>
+
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
