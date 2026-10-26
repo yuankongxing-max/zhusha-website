@@ -3,56 +3,57 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>朱砂集 · 东方雅致饰品</title>
+  <title>朱砂集 · 东方雅致</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="hero">
-    <div class="hero-content">
-      <h1>朱砂集</h1>
-      <p class="slogan">东方之美，佩于日常</p>
-      <p class="sub">以东方审美，寻找适合自己的那一件。</p>
-      <div class="hero-btns">
-        <a href="#products" class="btn-primary">选购系列</a>
-        <a href="#custom" class="btn-outline">预约定制</a>
-      </div>
-    </div>
+  <header class="nav">
+    <div class="logo">朱砂集 <span>CINNABAR</span></div>
+    <nav>
+      <a href="#home">首页</a>
+      <a href="#products">选购</a>
+      <a href="#custom">定制</a>
+      <a href="#about">我的</a>
+    </nav>
   </header>
 
-  <nav class="categories">
-    <a href="#" data-cat="全部" class="active">全部</a>
-    <a href="#" data-cat="手串">手串</a>
-    <a href="#" data-cat="吊坠">吊坠</a>
-    <a href="#" data-cat="耳饰">耳饰</a>
-  </nav>
-
-  <section id="products" class="container">
-    <h2>为你精选</h2>
-    <div id="product-grid" class="product-grid"></div>
+  <section id="home" class="hero">
+    <div class="hero-text">
+      <p class="tag">仅此一件</p>
+      <h1>朱砂红，从日常里醒来</h1>
+      <p class="desc">东方之美，佩于日常。<br>每一件都有真实规格与价格，材质待核实，以检测报告为准。</p>
+      <a href="#products" class="btn">进入选购</a>
+    </div>
   </section>
 
-  <section id="custom" class="custom-section">
+  <section id="products" class="section">
+    <h2>馆藏</h2>
+    <div class="filters">
+      <button class="filter active" data-cat="全部">全部</button>
+      <button class="filter" data-cat="手串">手串</button>
+      <button class="filter" data-cat="吊坠">吊坠</button>
+      <button class="filter" data-cat="耳饰">耳饰</button>
+    </div>
+    <div id="grid" class="grid"></div>
+  </section>
+
+  <section id="custom" class="section custom">
     <h2>私人定制</h2>
-    <p>普通商品不满足需求？提交您的偏好与预算，顾问一对一沟通。</p>
-    <form id="custom-form">
-      <input type="text" placeholder="礼赠场景（生日/纪念日等）" required>
-      <input type="text" placeholder="预算范围" required>
-      <textarea placeholder="款式偏好与需求描述"></textarea>
-      <input type="text" placeholder="联系方式（微信/手机）" required>
-      <button type="submit" class="btn-primary">提交需求</button>
+    <p>普通商品不满足？留下偏好与预算，顾问一对一沟通。</p>
+    <form id="form">
+      <input placeholder="礼赠场景" required>
+      <input placeholder="预算范围" required>
+      <textarea placeholder="款式偏好"></textarea>
+      <input placeholder="联系方式" required>
+      <button type="submit">提交需求</button>
     </form>
   </section>
 
   <footer>
-    <p>朱砂集 · 东方雅致 · 材质信息以实际检测报告为准 · 不宣传未经证实的功效</p>
+    朱砂集 · 东方雅致 · 不宣传未经证实的功效 · 材质以实际检测为准
   </footer>
 
-  <div id="modal" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <div id="modal-body"></div>
-    </div>
-  </div>
+  <div id="modal" class="modal"><div class="modal-inner"><span class="close">×</span><div id="modal-content"></div></div></div>
 
   <script src="script.js"></script>
 </body>
