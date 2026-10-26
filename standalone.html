@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>朱砂集 · 东方雅致</title>
+<style>
+:root { --red:#651B20; --black:#171513; --cream:#F4EEE4; --gold:#B99A62; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:"PingFang SC", system-ui, sans-serif; background:var(--cream); color:var(--black); }
+.nav { position:sticky; top:0; background:var(--black); color:#fff; display:flex; justify-content:space-between; align-items:center; padding:16px 40px; z-index:10; }
+.logo span { color:var(--gold); font-size:14px; margin-left:8px; }
+.nav a { color:#fff; text-decoration:none; margin-left:24px; }
+.hero { height:70vh; background:linear-gradient(135deg, var(--black), var(--red)); color:#fff; display:flex; align-items:center; justify-content:center; text-align:center; padding:20px; }
+.hero h1 { font-size:42px; margin:16px 0; }
+.tag { color:var(--gold); letter-spacing:2px; }
+.btn { display:inline-block; margin-top:24px; padding:14px 32px; background:var(--gold); color:var(--black); text-decoration:none; border-radius:4px; }
+.section { max-width:1200px; margin:0 auto; padding:50px 20px; }
+.filters { text-align:center; margin-bottom:30px; }
+.filter { background:none; border:1px solid #ddd; padding:8px 20px; margin:0 6px; cursor:pointer; border-radius:20px; }
+.filter.active { background:var(--red); color:#fff; border-color:var(--red); }
+.grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:24px; }
+.card { background:#fff; border-radius:12px; overflow:hidden; cursor:pointer; box-shadow:0 4px 12px rgba(0,0,0,.06); transition:.2s; }
+.card:hover { transform:translateY(-4px); }
+.card img { width:100%; height:300px; object-fit:cover; }
+.card-info { padding:16px; }
+.card-info h3 { font-size:18px; margin-bottom:8px; }
+.price { color:var(--red); font-weight:600; }
+.custom { text-align:center; background:#fff; }
+form { max-width:480px; margin:20px auto; display:flex; flex-direction:column; gap:12px; }
+input, textarea { padding:12px; border:1px solid #ddd; border-radius:6px; }
+button { padding:12px; background:var(--red); color:#fff; border:none; border-radius:6px; cursor:pointer; }
+footer { background:var(--black); color:#fff; text-align:center; padding:30px; font-size:14px; }
+.modal { display:none; position:fixed; inset:0; background:rgba(0,0,0,.7); z-index:100; overflow:auto; }
+.modal-inner { background:#fff; max-width:700px; margin:40px auto; padding:30px; border-radius:12px; position:relative; }
+.close { position:absolute; right:20px; top:10px; font-size:32px; cursor:pointer; }
+.sku { display:inline-block; margin:6px; padding:8px 14px; border:1px solid #ddd; border-radius:6px; cursor:pointer; }
+.note { color:var(--gold); margin-top:16px; font-size:14px; }
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="logo">朱砂集 <span>CINNABAR</span></div>
+  <nav>
+    <a href="#home">首页</a>
+    <a href="#products">选购</a>
+    <a href="#custom">定制</a>
+  </nav>
+</header>
+<section id="home" class="hero">
+  <div>
+    <p class="tag">仅此一件</p>
+    <h1>朱砂红，从日常里醒来</h1>
+    <p>东方之美，佩于日常。<br>全部真实商品已上架，点开即可查看规格与价格。</p>
+    <a href="#products" class="btn">进入选购</a>
+  </div>
+</section>
+<section id="products" class="section">
+  <h2 style="text-align:center;margin-bottom:20px;">馆藏</h2>
+  <div class="filters">
+    <button class="filter active" data-cat="全部">全部</button>
+    <button class="filter" data-cat="手串">手串</button>
+    <button class="filter" data-cat="吊坠">吊坠</button>
+    <button class="filter" data-cat="耳饰">耳饰</button>
+  </div>
+  <div id="grid" class="grid"></div>
+</section>
+<section id="custom" class="section custom">
+  <h2>私人定制</h2>
+  <p>留下偏好与预算，顾问一对一沟通。</p>
+  <form id="form">
+    <input placeholder="礼赠场景" required>
+    <input placeholder="预算范围" required>
+    <textarea placeholder="款式偏好"></textarea>
+    <input placeholder="联系方式" required>
+    <button type="submit">提交需求</button>
+  </form>
+</section>
+<footer>朱砂集 · 东方雅致 · 材质以实际检测为准 · 不宣传未经证实的功效</footer>
+<div id="modal" class="modal"><div class="modal-inner"><span class="close">×</span><div id="modal-content"></div></div></div>
+<script>
+const BRACELET = "data:image/jpeg;base64,PLACEHOLDER_BRACELET";
+const PENDANT = "data:image/jpeg;base64,PLACEHOLDER_PENDANT";
+const EARRINGS = "data:image/jpeg;base64,PLACEHOLDER_EARRINGS";
+const products = [
+  {id:1,name:"天然小晶体砂闪光珠手串",cat:"手串",price:169,img:BRACELET,poem:"珠面闪光，日常里自有光。",size:"6mm ¥169 / 8mm ¥289 / 10mm ¥399",skus:[{s:"6mm",p:169},{s:"8mm",p:289},{s:"10mm",p:399}]},
+  {id:2,name:"天然小晶体砂苹果珠手串",cat:"手串",price:359,img:BRACELET,poem:"苹果珠，圆润可亲。",size:"7×8mm ¥359 / 10×11mm ¥670",skus:[{s:"7×8mm",p:359},{s:"10×11mm",p:670}]},
+  {id:3,name:"天然小晶体砂光面圆珠手串",cat:"手串",price:169,img:BRACELET,poem:"光面圆珠，多尺寸任选。",size:"6mm 至 16mm",skus:[{s:"6mm",p:169},{s:"8mm",p:289},{s:"10mm",p:439},{s:"12mm",p:699},{s:"14mm",p:938},{s:"16mm",p:1158}]},
+  {id:4,name:"天然小晶体砂5mm多圈手串",cat:"手串",price:129,img:BRACELET,poem:"多圈轻盈，灵活佩戴。",size:"单/双/三圈",skus:[{s:"单圈",p:129},{s:"双圈",p:239},{s:"三圈",p:359}]},
+  {id:5,name:"天然小晶体砂祈福吊坠",cat:"吊坠",price:149,img:PENDANT,poem:"祈福之形，随身相伴。",size:"17.5×20×13mm",skus:[{s:"标准",p:149}]},
+  {id:6,name:"天然小晶体砂观音吊坠",cat:"吊坠",price:659,img:PENDANT,poem:"观音造型，不含绳。",size:"63×33×9mm",skus:[{s:"标准",p:659}]},
+  {id:7,name:"天然小晶体砂天珠吊坠",cat:"吊坠",price:449,img:PENDANT,poem:"天珠之形，不含绳。",size:"42×18mm",skus:[{s:"标准",p:449}]},
+  {id:8,name:"天然砂平安无事牌吊坠",cat:"吊坠",price:289,img:PENDANT,poem:"平安无事，多版可选。",size:"小/中/大版",skus:[{s:"小版",p:289},{s:"中版",p:539},{s:"大版",p:799}]},
+  {id:9,name:"天然小晶体砂佛公吊坠",cat:"吊坠",price:149,img:PENDANT,poem:"佛公造型，不含绳。",size:"小/大版",skus:[{s:"小版",p:149},{s:"大版",p:239}]},
+  {id:10,name:"天然小晶体砂貌貅吊坠",cat:"吊坠",price:589,img:PENDANT,poem:"貌貅之形，不含绳。",size:"36×25×20mm",skus:[{s:"标准",p:589}]},
+  {id:11,name:"天然小晶体砂平安扣吊坠",cat:"吊坠",price:279,img:PENDANT,poem:"平安扣，不含绳。",size:"30×9mm",skus:[{s:"标准",p:279}]},
+  {id:12,name:"天然胭脂砂耳饰合集",cat:"耳饰",price:159,img:EARRINGS,poem:"麦穗/圆珠/葫芦多款。",size:"多种",skus:[{s:"麦穗",p:189},{s:"圆珠",p:159},{s:"葫芦",p:209}]},
+  {id:13,name:"天然胭脂砂耳钉合集",cat:"耳饰",price:39,img:EARRINGS,poem:"纯银镶嵌，轻盈入耳。",size:"6/8mm 等",skus:[{s:"6mm",p:39},{s:"8mm",p:59},{s:"双珠",p:189}]}
+];
+let cat = "全部";
+function render() {
+  const list = cat === "全部" ? products : products.filter(p => p.cat === cat);
+  document.getElementById("grid").innerHTML = list.map(p => `
+    <div class="card" onclick="openM(${p.id})">
+      <img src="${p.img}" alt="${p.name}">
+      <div class="card-info">
+        <h3>${p.name}</h3>
+        <p style="font-size:14px;color:#666;margin-bottom:8px;">${p.poem}</p>
+        <div class="price">¥${p.price}起</div>
+      </div>
+    </div>
+  `).join("");
+}
+function openM(id) {
+  const p = products.find(x => x.id === id);
+  document.getElementById("modal-content").innerHTML = `
+    <img src="${p.img}" style="width:100%;border-radius:8px;margin-bottom:16px;">
+    <h2>${p.name}</h2>
+    <p class="price">¥${p.price}起</p>
+    <p>${p.poem}</p>
+    <p style="margin:12px 0;"><strong>规格：</strong>${p.size}</p>
+    ${p.skus.map(s => `<span class="sku" onclick="alert('已选 ${s.s} ¥${s.p}')">${s.s} ¥${s.p}</span>`).join("")}
+    <p class="note">材质信息待核实，以实际检测报告为准。不宣传未经证实的功效。</p>
+    <button style="width:100%;margin-top:16px;padding:12px;background:var(--red);color:#fff;border:none;border-radius:6px;" onclick="alert('请添加客服微信咨询')">咨询顾问</button>
+  `;
+  document.getElementById("modal").style.display = "block";
+}
+document.querySelectorAll(".filter").forEach(b => b.onclick = () => {
+  document.querySelectorAll(".filter").forEach(x => x.classList.remove("active"));
+  b.classList.add("active");
+  cat = b.dataset.cat;
+  render();
+});
+document.querySelector(".close").onclick = () => document.getElementById("modal").style.display = "none";
+window.onclick = e => { if (e.target.id === "modal") document.getElementById("modal").style.display = "none"; };
+document.getElementById("form").onsubmit = e => {
+  e.preventDefault();
+  alert("需求已提交，顾问将尽快联系您。");
+  e.target.reset();
+};
+render();
+</script>
+</body>
+</html>
